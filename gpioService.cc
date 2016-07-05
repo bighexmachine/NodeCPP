@@ -1,5 +1,5 @@
 #include <node.h>
-#include "gpioController.h"
+#include "myobject.h"
 
 using namespace v8;
 

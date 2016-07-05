@@ -1,6 +1,6 @@
-var gpioService = require('bindings')('gpioService.node')
+var service = require('bindings')('gpioService');
 
-var obj = new gpioService.MyObject(10);
+var obj = new service.MyObject(10);
 console.log( obj.plusOne() ); // 11
 console.log( obj.plusOne() ); // 12
 console.log( obj.plusOne() ); // 13
@@ -11,4 +11,3 @@ console.log( obj.multiply(10).value() ); // 130
 var newobj = obj.multiply(-1);
 console.log( newobj.value() ); // -13
 console.log( obj === newobj ); // false
-
