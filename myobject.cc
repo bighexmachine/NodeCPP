@@ -44,7 +44,7 @@ Handle<Value> MyObject::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> Write(const Arguments& args) {
+Handle<Value> MyObject::Write(const Arguments& args) {
   HandleScope scope;
 
   if (args.Length() < 2) {
