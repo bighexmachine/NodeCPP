@@ -39,7 +39,6 @@ Handle<Value> MyObject::New(const Arguments& args) {
   MyObject* obj = new MyObject();
   obj->value_ = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
   obj->Wrap(args.This());
-  obj->bob =  10;
   return args.This();
 }
 
@@ -58,7 +57,7 @@ void writeClock(int val)
 void MyObject::Clock()
 {
   cout << "started";
-  int[] signals = {1, 0, 16, 0}
+  int signals[] = {1, 0, 16, 0};
   while(1)
   {
     writeClock( signals[state] );

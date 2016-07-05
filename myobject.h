@@ -18,7 +18,7 @@ class MyObject : public node::ObjectWrap {
   double value_;
   std::thread clockThread;
   int state;
-  void MyObject::Clock;
+  void Clock();
 };
 
 #endif

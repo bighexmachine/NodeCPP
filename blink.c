@@ -33,7 +33,7 @@
 int main (void)
 {
   printf ("Raspberry Pi blink\n") ;
-
+  printf("%d, %d", HIGH, LOW);
   wiringPiSetup () ;
   int i;
   for(i=0;i<13;i++)
