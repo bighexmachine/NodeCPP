@@ -1,6 +1,7 @@
 #include <node.h>
 #include <stdio.h>
 #include <wiringPi.h>
+#include <thread>
 #include "myobject.h"
 
 using namespace v8;
@@ -38,6 +39,16 @@ Handle<Value> MyObject::New(const Arguments& args) {
   obj->Wrap(args.This());
 
   return args.This();
+}
+
+void foo()
+{
+  cout << "HO";
+}
+
+Handle<Value> MyObject::StartClock(const Arguments& args)
+{
+  thread first (foo); 
 }
 
 Handle<Value> MyObject::Write(const Arguments& args) {
