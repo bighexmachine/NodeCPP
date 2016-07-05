@@ -72,40 +72,25 @@ Handle<Value> MyObject::StartClock(const Arguments& args)
   HandleScope scope;
   MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
   obj->clockThread = thread(&MyObject::Clock, obj);
-  //cout <<  obj->value_ << " " << obj->bob << endl;
   return scope.Close(Undefined());
 }
 
-Handle<Value> MyObject::Write(const Arguments& args) {
-  HandleScope scope;
 
-  if (args.Length() < 2) {
-    ThrowException(Exception::TypeError(String::New("Wrong number of arguments")));
-    return scope.Close(Undefined());
+Handle<Value> MyObject::WriteData(const Arguments& args)
+{
+  int byte = args[0]->NumberValue();
+  int base = 5
+  int i;
+  for ( i=base; i<base+8; i++ )
+  {
+    int shift = i-base;
+    digitalWrite (i, ( byte & (1<<shift) ) >> shift);
   }
+}
 
-  if (!args[0]->IsNumber() || !args[1]->IsNumber()) {
-    ThrowException(Exception::TypeError(String::New("Wrong argument types")));
-    return scope.Close(Undefined());
-  }
-
-  double port = args[0]->NumberValue();
-  double value = args[1]->NumberValue();
-
-  if(port>12 || port<0){
-    ThrowException(Exception::TypeError(String::New("Invlaid port Value")));
-    return scope.Close(Undefined());
-  }
-  
-  if (value == 1){
-    digitalWrite (0, HIGH);
-  }
-  else if(value == 0) {
-    digitalWrite (0, LOW);
-  }
-  else{
-    ThrowException(Exception::TypeError(String::New("Invlaid write Value")));
-  }
-  return scope.Close(Undefined());
+Handle<Value> MyObject::ramPiSel(const Arguments& args)
+{
+  int bit = args[0]->NumberValue() & 1;
+  digitalWrite (4, bit);
 }
 

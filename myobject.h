@@ -12,7 +12,8 @@ class MyObject : public node::ObjectWrap {
   ~MyObject();
 
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Write(const v8::Arguments& args);
+  static v8::Handle<v8::Value> WriteData(const v8::Arguments& args);
+  static v8::Handle<v8::Value> ramPiSel(const v8::Arguments& args);
   static v8::Handle<v8::Value> StartClock(const v8::Arguments& args);
   static v8::Persistent<v8::Function> constructor;
   double value_;
