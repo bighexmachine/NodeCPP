@@ -17,7 +17,8 @@ class MyObject : public node::ObjectWrap {
   static v8::Persistent<v8::Function> constructor;
   double value_;
   std::thread clockThread;
-  int bob;
+  int state;
+  void MyObject::Clock;
 };
 
 #endif

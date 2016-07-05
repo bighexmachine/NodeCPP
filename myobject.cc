@@ -43,16 +43,27 @@ Handle<Value> MyObject::New(const Arguments& args) {
   return args.This();
 }
 
-void foo()
+void writeClock(int val)
 {
-  cout << "HO";
-  int i;
-  for( i=0; i<10; i++)
+  //phase 0 clock
+  digitalWrite (0, val & 1);
+  //phase 0 reset
+  digitalWrite (1, val & 2);
+  //phase 1 clock
+  digitalWrite (2, val & 16);
+  //phase 1 reset
+  digitalWrite (3, val & 32);
+}
+
+void MyObject::Clock()
+{
+  cout << "started";
+  int[] signals = {1, 0, 16, 0}
+  while(1)
   {
-    digitalWrite (0, LOW);
+    writeClock( signals[state] );
     delayMicroseconds(100000);
-    digitalWrite (0, HIGH);
-    delayMicroseconds(100000);
+    state = (state+1) % 4;
   }
 }
 
@@ -60,7 +71,7 @@ Handle<Value> MyObject::StartClock(const Arguments& args)
 {
   HandleScope scope;
   MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
-  obj->clockThread = thread(foo);
+  obj->clockThread = thread(&MyObject::Clock, obj);
   //cout <<  obj->value_ << " " << obj->bob << endl;
   return scope.Close(Undefined());
 }
