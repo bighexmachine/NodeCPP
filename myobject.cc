@@ -1,7 +1,6 @@
 #include <node.h>
 #include <stdio.h>
 #include <wiringPi.h>
-#include <thread>
 #include <iostream>
 #include "myobject.h"
 
@@ -40,18 +39,30 @@ Handle<Value> MyObject::New(const Arguments& args) {
   MyObject* obj = new MyObject();
   obj->value_ = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
   obj->Wrap(args.This());
-
+  obj->bob =  10;
   return args.This();
 }
 
 void foo()
 {
   cout << "HO";
+  int i;
+  for( i=0; i<10; i++)
+  {
+    digitalWrite (0, LOW);
+    delayMicroseconds(100000);
+    digitalWrite (0, HIGH);
+    delayMicroseconds(100000);
+  }
 }
 
 Handle<Value> MyObject::StartClock(const Arguments& args)
 {
-  thread first (foo); 
+  HandleScope scope;
+  MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
+  //obj->clockThread = thread(foo);
+  cout <<  obj->value_ << " " << obj->bob << endl;
+  return scope.Close(Undefined());
 }
 
 Handle<Value> MyObject::Write(const Arguments& args) {
