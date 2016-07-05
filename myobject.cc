@@ -60,8 +60,8 @@ Handle<Value> MyObject::StartClock(const Arguments& args)
 {
   HandleScope scope;
   MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
-  //obj->clockThread = thread(foo);
-  cout <<  obj->value_ << " " << obj->bob << endl;
+  obj->clockThread = thread(foo);
+  //cout <<  obj->value_ << " " << obj->bob << endl;
   return scope.Close(Undefined());
 }
 
