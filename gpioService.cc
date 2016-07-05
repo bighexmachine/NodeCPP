@@ -40,7 +40,17 @@ Handle<Value> Write(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-void Init(Handle<Object> exports) {
+Handle<Value> CreateObject(const Arguments& args)
+{
+  HandleScope scope;
+
+  Local<Object> obj = Object::New();
+  obj->Set(String::NewSymbol("msg"), args[0]->ToString());
+
+  return scope.Close(obj);
+}
+
+void Init(Handle<Object> exports, Handle<Object> module) {
   wiringPiSetup () ;
 
   int i;
@@ -49,8 +59,8 @@ void Init(Handle<Object> exports) {
     pinMode (i, OUTPUT) ;
   }
 
-  exports->Set(String::NewSymbol("write"),
-      FunctionTemplate::New(Write)->GetFunction());
+  exports->Set(String::NewSymbol("write"), FunctionTemplate::New(Write)->GetFunction());
+  module->Set(String::NewSymbol("exports"), FunctionTemplate::New(CreateObject)->GetFunction());
 }
 
 
