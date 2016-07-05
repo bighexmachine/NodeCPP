@@ -9,7 +9,7 @@ using namespace std;
 
 Persistent<Function> MyObject::constructor;
 
-MyObject::MyObject() {};
+MyObject::MyObject() {state = 0;};
 MyObject::~MyObject() {};
 
 void MyObject::Init(Handle<Object> target) {
@@ -60,6 +60,7 @@ void MyObject::Clock()
   int signals[] = {1, 0, 16, 0};
   while(1)
   {
+    cout << "_" << state << "_" << endl;
     writeClock( signals[state] );
     delayMicroseconds(100000);
     state = (state+1) % 4;
