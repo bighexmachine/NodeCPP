@@ -7,4 +7,4 @@ void InitAll(Handle<Object> exports) {
   MyObject::Init(exports);
 }
 
-NODE_MODULE(addon, InitAll)
+NODE_MODULE(gpioService, InitAll)
