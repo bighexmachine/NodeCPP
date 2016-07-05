@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <wiringPi.h>
 #include <thread>
+#include <iostream>
 #include "myobject.h"
 
 using namespace v8;
+using namespace std;
 
 Persistent<Function> MyObject::constructor;
 
