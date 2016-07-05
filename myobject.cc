@@ -29,6 +29,7 @@ void MyObject::Init(Handle<Object> target) {
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
   // Prototype
   NODE_SET_PROTOTYPE_METHOD(tpl, "write", Write);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "startClock", StartClock);
   constructor = Persistent<Function>::New(tpl->GetFunction());
   target->Set(String::NewSymbol("MyObject"), constructor);
 }
