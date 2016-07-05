@@ -20,6 +20,7 @@ CFLAGS_Debug := \
 	-Wextra \
 	-Wno-unused-parameter \
 	-pthread \
+	-std=c++0x \
 	-g \
 	-O0
 
@@ -53,6 +54,7 @@ CFLAGS_Release := \
 	-Wextra \
 	-Wno-unused-parameter \
 	-pthread \
+	-std=c++0x \
 	-O2 \
 	-fno-strict-aliasing \
 	-fno-tree-vrp \
@@ -73,7 +75,8 @@ INCS_Release := \
 	-I/home/pi/.node-gyp/0.10.41/deps/v8/include
 
 OBJS := \
-	$(obj).target/$(TARGET)/gpioService.o
+	$(obj).target/$(TARGET)/gpioService.o \
+	$(obj).target/$(TARGET)/myobject.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)
@@ -108,7 +111,7 @@ LDFLAGS_Release := \
 	-rdynamic
 
 LIBS := \
-	-lwiringPi
+	-lwiringPi -lpthread
 
 $(obj).target/gpioService.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(obj).target/gpioService.node: LIBS := $(LIBS)
