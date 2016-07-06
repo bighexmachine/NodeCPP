@@ -59,7 +59,6 @@ void MyObject::Clock()
   while(1)
   {
     clockLock.lock();
-    cout << "_" << state << "_" << endl;
     writeClock( signals[state] );
     delayMicroseconds(delay);
     state = (state+1) % 4;
