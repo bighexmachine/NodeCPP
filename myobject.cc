@@ -6,8 +6,8 @@
 
 Persistent<Function> MyObject::constructor;
 
-MyObject::MyObject(): signals{1, 0, 16, 0} {state = 0; delay = 1000; };
-MyObject::~MyObject() {};
+MyObject::MyObject(): signals{1, 0, 16, 0}, state(0), delay(1000) {}
+MyObject::~MyObject() {}
 
 void MyObject::Init(Handle<Object> target) {
   //setting up gpio pins
@@ -27,6 +27,7 @@ void MyObject::Init(Handle<Object> target) {
   NODE_SET_PROTOTYPE_METHOD(tpl, "writeData", WriteData);
   NODE_SET_PROTOTYPE_METHOD(tpl, "startClock", StartClock);
   NODE_SET_PROTOTYPE_METHOD(tpl, "ramPiSel", RamPiSel);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "reset", Reset);
   constructor = Persistent<Function>::New(tpl->GetFunction());
   target->Set(String::NewSymbol("MyObject"), constructor);
 }
@@ -95,6 +96,14 @@ Handle<Value> MyObject::RamPiSel(const Arguments& args)
   int input = args[0]->NumberValue();
   int bit = input & 1;
   digitalWrite (4, bit);
+  return scope.Close(Undefined());
+}
+
+Handle<Value> MyObject::Reset(const Arguments& args)
+{
+  HandleScope scope;
+  digitalWrite (1, bit);
+  digitalWrite (3, bit);
   return scope.Close(Undefined());
 }
 
