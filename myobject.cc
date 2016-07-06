@@ -6,11 +6,10 @@
 
 Persistent<Function> MyObject::constructor;
 
-MyObject::MyObject(): state(0), delay(10), clockIsRunning(0), signals{1, 0, 16, 0}
+MyObject::MyObject(): state(0), delay(10), signals{1, 0, 16, 0}, clockIsRunning(0)
 {
   clockLock.lock();
-  MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
-  obj->clockThread = thread(&MyObject::Clock, obj);
+  clockThread = thread(&MyObject::Clock, obj);
 }
 
 MyObject::~MyObject() {}
