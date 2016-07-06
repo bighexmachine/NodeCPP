@@ -20,6 +20,7 @@ class MyObject : public node::ObjectWrap {
   static v8::Handle<v8::Value> StartClock(const v8::Arguments& args);
   static v8::Handle<v8::Value> StopClock(const v8::Arguments& args);
   static v8::Handle<v8::Value> StepClock(const v8::Arguments& args);
+  static v8::Handle<v8::Value> SetSpeed(const v8::Arguments& args);
   static v8::Handle<v8::Value> Reset(const v8::Arguments& args);
   static v8::Persistent<v8::Function> constructor;
   double value_;
