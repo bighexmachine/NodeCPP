@@ -93,8 +93,8 @@ Handle<Value> MyObject::StepClock(const Arguments& args)
 {
   HandleScope scope;
   MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
-  if (obj->clockIsRunning) StopClock();
-  writeClock( signals[state] );
+  if (obj->clockIsRunning) StopClock(args);
+  writeClock( obj->signals[obj->state] );
   state = (state+1) % 4;
   return scope.Close(Undefined());
 }
