@@ -102,8 +102,8 @@ Handle<Value> MyObject::RamPiSel(const Arguments& args)
 Handle<Value> MyObject::Reset(const Arguments& args)
 {
   HandleScope scope;
-  digitalWrite (1, bit);
-  digitalWrite (3, bit);
+  digitalWrite (1, 1);
+  digitalWrite (3, 1);
   return scope.Close(Undefined());
 }
 
