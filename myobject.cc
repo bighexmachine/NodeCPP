@@ -77,6 +77,7 @@ Handle<Value> MyObject::StartClock(const Arguments& args)
 
 Handle<Value> MyObject::WriteData(const Arguments& args)
 {
+  HandleScope scope;
   int byte = args[0]->NumberValue();
   int base = 5;
   int i;
@@ -90,6 +91,7 @@ Handle<Value> MyObject::WriteData(const Arguments& args)
 
 Handle<Value> MyObject::RamPiSel(const Arguments& args)
 {
+  HandleScope scope;
   int bit = args[0]->NumberValue() & 1;
   digitalWrite (4, bit);
   return scope.Close(Undefined());
