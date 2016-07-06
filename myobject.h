@@ -27,6 +27,7 @@ class MyObject : public node::ObjectWrap {
   void Clock();
   mutex clockLock;
   int signals[4];
+  int clockIsRunning;
 };
 
 #endif

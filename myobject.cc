@@ -6,7 +6,13 @@
 
 Persistent<Function> MyObject::constructor;
 
-MyObject::MyObject(): state(0), delay(10), signals{1, 0, 16, 0} {}
+MyObject::MyObject(): state(0), delay(10), clockIsRunning(0), signals{1, 0, 16, 0}
+{
+  clockLock.lock();
+  MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
+  obj->clockThread = thread(&MyObject::Clock, obj);
+}
+
 MyObject::~MyObject() {}
 
 void MyObject::Init(Handle<Object> target) {
@@ -69,11 +75,27 @@ void MyObject::Clock()
 Handle<Value> MyObject::StartClock(const Arguments& args)
 {
   HandleScope scope;
-  MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
-  obj->clockThread = thread(&MyObject::Clock, obj);
+  clockIsRunning = 1;
+  clockLock.unlock();
   return scope.Close(Undefined());
 }
 
+Handle<Value> MyObject::StopClock(const Arguments& args)
+{
+  HandleScope scope;
+  clockLock.lock();
+  clockIsRunning = 0;
+  return scope.Close(Undefined());
+}
+
+Handle<Value> MyObject::StepClock(const Arguments& args)
+{
+  HandleScope scope;
+  if (clockIsRunning) StopClock();
+  writeClock( signals[state] );
+  state = (state+1) % 4;
+  return scope.Close(Undefined());
+}
 
 Handle<Value> MyObject::WriteData(const Arguments& args)
 {
