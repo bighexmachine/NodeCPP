@@ -25,7 +25,7 @@ class MyObject : public node::ObjectWrap {
   int delay;
   void Clock();
   mutex clockLock;
-  int signals[] = {1, 0, 16, 0};;
+  int signals[] = {1, 0, 16, 0};
 };
 
 #endif
