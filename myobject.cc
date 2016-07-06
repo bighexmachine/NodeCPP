@@ -6,7 +6,7 @@
 
 Persistent<Function> MyObject::constructor;
 
-MyObject::MyObject() {state = 0;delay = 1000;};
+MyObject::MyObject() {state = 0; delay = 1000; signals = {1, 0, 16, 0}; };
 MyObject::~MyObject() {};
 
 void MyObject::Init(Handle<Object> target) {
