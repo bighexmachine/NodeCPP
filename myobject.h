@@ -3,6 +3,9 @@
 #include <thread>
 #include <node.h>
 
+using namespace v8;
+using namespace std;
+
 class MyObject : public node::ObjectWrap {
  public:
   static void Init(v8::Handle<v8::Object> target);
@@ -19,7 +22,10 @@ class MyObject : public node::ObjectWrap {
   double value_;
   std::thread clockThread;
   int state;
+  int delay;
   void Clock();
+  mutex clockLock;
+  int signals[];
 };
 
 #endif

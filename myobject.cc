@@ -4,12 +4,9 @@
 #include <iostream>
 #include "myobject.h"
 
-using namespace v8;
-using namespace std;
-
 Persistent<Function> MyObject::constructor;
 
-MyObject::MyObject() {state = 0;};
+MyObject::MyObject() {state = 0;delay = 1000; signals = {1, 0, 16, 0};};
 MyObject::~MyObject() {};
 
 void MyObject::Init(Handle<Object> target) {
@@ -57,13 +54,14 @@ void writeClock(int val)
 void MyObject::Clock()
 {
   cout << "started";
-  int signals[] = {1, 0, 16, 0};
   while(1)
   {
+    clockLock.lock();
     cout << "_" << state << "_" << endl;
     writeClock( signals[state] );
-    delayMicroseconds(100000);
+    delayMicroseconds(delay);
     state = (state+1) % 4;
+    clockLock.unlock();
   }
 }
 
