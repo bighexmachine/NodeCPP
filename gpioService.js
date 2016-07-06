@@ -11,8 +11,8 @@ stdin.addListener("data", function(d){
       obj.stopClock();
   } else if ( d.toString().trim() == "step" ){
       obj.stepClock();
-  } else if ( d.toString().trim() == "write" ){
-      obj.startClock();
+  } else if ( d.toString().trim() == "reset" ){
+      obj.reset();
   }
   //obj.write(0, parseInt(d.toString().trim()) )
 })

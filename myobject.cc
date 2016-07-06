@@ -31,6 +31,8 @@ void MyObject::Init(Handle<Object> target) {
   // Prototype
   NODE_SET_PROTOTYPE_METHOD(tpl, "writeData", WriteData);
   NODE_SET_PROTOTYPE_METHOD(tpl, "startClock", StartClock);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "stopClock", StartClock);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "stepClock", StartClock);
   NODE_SET_PROTOTYPE_METHOD(tpl, "ramPiSel", RamPiSel);
   NODE_SET_PROTOTYPE_METHOD(tpl, "reset", Reset);
   constructor = Persistent<Function>::New(tpl->GetFunction());
