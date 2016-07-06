@@ -92,7 +92,8 @@ Handle<Value> MyObject::WriteData(const Arguments& args)
 Handle<Value> MyObject::RamPiSel(const Arguments& args)
 {
   HandleScope scope;
-  int bit = args[0]->NumberValue() & 1;
+  int input = args[0]->NumberValue();
+  int bit = input & 1;
   digitalWrite (4, bit);
   return scope.Close(Undefined());
 }
