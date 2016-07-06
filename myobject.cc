@@ -24,8 +24,9 @@ void MyObject::Init(Handle<Object> target) {
   tpl->SetClassName(String::NewSymbol("MyObject"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
   // Prototype
-  NODE_SET_PROTOTYPE_METHOD(tpl, "write", Write);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "writeData", WriteData);
   NODE_SET_PROTOTYPE_METHOD(tpl, "startClock", StartClock);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "ramPiSel", RamPiSel);
   constructor = Persistent<Function>::New(tpl->GetFunction());
   target->Set(String::NewSymbol("MyObject"), constructor);
 }
@@ -77,18 +78,20 @@ Handle<Value> MyObject::StartClock(const Arguments& args)
 Handle<Value> MyObject::WriteData(const Arguments& args)
 {
   int byte = args[0]->NumberValue();
-  int base = 5
+  int base = 5;
   int i;
   for ( i=base; i<base+8; i++ )
   {
     int shift = i-base;
     digitalWrite (i, ( byte & (1<<shift) ) >> shift);
   }
+  return scope.Close(Undefined());
 }
 
-Handle<Value> MyObject::ramPiSel(const Arguments& args)
+Handle<Value> MyObject::RamPiSel(const Arguments& args)
 {
   int bit = args[0]->NumberValue() & 1;
   digitalWrite (4, bit);
+  return scope.Close(Undefined());
 }
 
