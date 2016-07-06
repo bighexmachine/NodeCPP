@@ -33,6 +33,7 @@ void MyObject::Init(Handle<Object> target) {
   NODE_SET_PROTOTYPE_METHOD(tpl, "startClock", StartClock);
   NODE_SET_PROTOTYPE_METHOD(tpl, "stopClock", StopClock);
   NODE_SET_PROTOTYPE_METHOD(tpl, "stepClock", StepClock);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "setSpeed", SetSpeed);
   NODE_SET_PROTOTYPE_METHOD(tpl, "ramPiSel", RamPiSel);
   NODE_SET_PROTOTYPE_METHOD(tpl, "reset", Reset);
   constructor = Persistent<Function>::New(tpl->GetFunction());
@@ -98,6 +99,16 @@ Handle<Value> MyObject::StepClock(const Arguments& args)
   if (obj->clockIsRunning) StopClock(args);
   writeClock( obj->signals[obj->state] );
   obj->state = (obj->state+1) % 4;
+  return scope.Close(Undefined());
+}
+
+Handle<Value> MyObject::SetSpeed(const Arguments& args)
+{
+  HandleScope scope;
+  MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
+  int inputSpeed = args[0]->NumberValue();
+  int period = 1000000 / inputSpeed; 
+  obj->delay = period / 4;
   return scope.Close(Undefined());
 }
 

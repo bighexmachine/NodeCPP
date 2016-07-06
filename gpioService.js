@@ -17,6 +17,8 @@ stdin.addListener("data", function(d){
   } else if ( d.toString().trim() == "reset" ){
       obj.reset();
       console.log("reset");
+  } else {
+    obj.setSpeed(parseInt( d.toString().trim() ))
   }
   //obj.write(0, parseInt(d.toString().trim()) )
 })
