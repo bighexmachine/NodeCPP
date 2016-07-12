@@ -138,6 +138,8 @@ Handle<Value> MyObject::RamPiSel(const Arguments& args)
 Handle<Value> MyObject::Reset(const Arguments& args)
 {
   HandleScope scope;
+  MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
+  if (obj->clockIsRunning) StopClock(args);
   digitalWrite (1, 1);
   digitalWrite (3, 1);
   return scope.Close(Undefined());
