@@ -66,6 +66,8 @@ void MyObject::Clock()
   cout << "started";
   while(1)
   {
+    pauseClockLock.lock();
+    pauseClockLock.unlock();
     clockLock.lock();
     writeClock( signals[state] );
     delayMicroseconds(delay);
@@ -79,6 +81,7 @@ Handle<Value> MyObject::StartClock(const Arguments& args)
   HandleScope scope;
   MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
   obj->clockIsRunning = 1;
+  obj->pauseClockLock.unlock();
   obj->clockLock.unlock();
   return scope.Close(Undefined());
 }
@@ -87,6 +90,7 @@ Handle<Value> MyObject::StopClock(const Arguments& args)
 {
   HandleScope scope;
   MyObject* obj = ObjectWrap::Unwrap<MyObject>( args.This() );
+  obj->pauseClockLock.lock();
   obj->clockLock.lock();
   obj->clockIsRunning = 0;
   return scope.Close(Undefined());

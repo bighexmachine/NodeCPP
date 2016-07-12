@@ -29,6 +29,7 @@ class MyObject : public node::ObjectWrap {
   int delay;
   void Clock();
   mutex clockLock;
+  mutex pauseClockLock;
   int signals[4];
   int clockIsRunning;
 };
